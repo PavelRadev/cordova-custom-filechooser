@@ -32,7 +32,6 @@ public class CustomFileChooser extends CordovaPlugin {
     public void chooseFile(CallbackContext callbackContext,String type) {
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
         String[] extraMimeTypes = type.split(",");
 
         intent.setType(extraMimeTypes[0]);
