@@ -72,7 +72,7 @@ public class CustomFileChooser extends CordovaPlugin {
                 array = array.concat("|||");
                 array = array.concat(uri.toString());
             }
-//            callback.success("test data");
+            callback.success(array);
 
 //            if (resultCode == Activity.RESULT_OK) {
 //
