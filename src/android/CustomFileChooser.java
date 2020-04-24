@@ -56,7 +56,7 @@ public class CustomFileChooser extends CordovaPlugin {
 
         if (requestCode == PICK_FILE_REQUEST && callback != null) {
 
-            callback.success(resultCode.toString());
+            callback.success(resultCode);
 
 //            if (resultCode == Activity.RESULT_OK) {
 //
