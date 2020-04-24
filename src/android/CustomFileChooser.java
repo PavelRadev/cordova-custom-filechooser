@@ -64,13 +64,13 @@ public class CustomFileChooser extends CordovaPlugin {
             if(null != data.getClipData()) { // checking multiple selection or not
                 for(int i = 0; i < data.getClipData().getItemCount(); i++) {
                     Uri uri = data.getClipData().getItemAt(i).getUri();
-                    array.Concat("|||");
+                    array.concat("|||");
                     array.concat(uri.toString());
                 }
 
             } else {
                 Uri uri = data.getData();
-                array.Concat("|||");
+                array.concat("|||");
                 array.concat(uri.toString());
             }
             callback.success(array);
