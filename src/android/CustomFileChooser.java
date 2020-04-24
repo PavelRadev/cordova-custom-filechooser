@@ -59,18 +59,21 @@ public class CustomFileChooser extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == PICK_FILE_REQUEST && callback != null) {
-            JSONArray jsonArray = new JSONArray();
+            String array = "";
 
             if(null != data.getClipData()) { // checking multiple selection or not
                 for(int i = 0; i < data.getClipData().getItemCount(); i++) {
                     Uri uri = data.getClipData().getItemAt(i).getUri();
-                    jsonArray.add(uri.toString());
+                    array.Concat("|||");
+                    array.concat(uri.toString());
                 }
+
             } else {
                 Uri uri = data.getData();
-                jsonArray.add(uri.toString());
+                array.Concat("|||");
+                array.concat(uri.toString());
             }
-            callback.success(jsonArray.toString());
+            callback.success(array);
 
 //            if (resultCode == Activity.RESULT_OK) {
 //
