@@ -69,7 +69,8 @@ public class CustomFileChooser extends CordovaPlugin {
                 files[0] = data.getData().toString();
             }
 
-            callback.success(JSONArray(files).toString());
+            JSONArray jsonArray = new JSONArray(files);
+            callback.success(jsonArray.toString());
 
 //            if (resultCode == Activity.RESULT_OK) {
 //
