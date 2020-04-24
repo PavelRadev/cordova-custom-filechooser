@@ -5,7 +5,7 @@ Requiere Cordova >= 2.8.0
 
 Instalar con Cordova CLI
 	
-	$ cordova plugin add https://github.com/EnriqueGL/cordova-custom-filechooser.git
+	$ cordova plugin add https://github.com/PavelRadev/cordova-custom-filechooser.git
   
 API
 
