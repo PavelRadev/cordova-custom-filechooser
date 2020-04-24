@@ -38,13 +38,12 @@ public class CustomFileChooser extends CordovaPlugin {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         String[] extraMimeTypes = type.split(",");
 
-        intent.setType("image/*");
+        intent.setType("file/*");
         for(int i = 0; i < extraMimeTypes.length; i++) extraMimeTypes[i] = extraMimeTypes[i].trim();
 
         if(extraMimeTypes.length > 1)  intent.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
 
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        //intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
 
         Intent chooser = Intent.createChooser(intent, "Select File");
         cordova.startActivityForResult(this, chooser, PICK_FILE_REQUEST);
@@ -59,43 +58,30 @@ public class CustomFileChooser extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == PICK_FILE_REQUEST && callback != null) {
-            JSONArray jsonArray = new JSONArray();
 
-            if(null != data.getClipData()) { // checking multiple selection or not
-                for(int i = 0; i < data.getClipData().getItemCount(); i++) {
-                    jsonArray.put(data.getClipData().getItemAt(i).getUri().toString());
+            if (resultCode == Activity.RESULT_OK) {
+
+                JSONArray jsonArray = new JSONArray();
+
+                if (null != data.getClipData()) { // checking multiple selection or not
+                    for(int i = 0; i < data.getClipData().getItemCount(); i++) {
+                        jsonArray.put(data.getClipData().getItemAt(i).getUri().toString());
+                    }
+                } else {
+                    jsonArray.put(data.getData().toString());
                 }
+
+                callback.success(jsonArray.toString());
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+
+                // TODO NO_RESULT or error callback?
+                PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+                callback.sendPluginResult(pluginResult);
+
             } else {
-                jsonArray.put(data.getData().toString());
+
+                callback.error(resultCode);
             }
-
-            callback.success(jsonArray.toString());
-
-//            if (resultCode == Activity.RESULT_OK) {
-//
-//                Uri uri = data.getData();
-//
-//                if (uri != null) {
-//
-//                    Log.w(TAG, uri.toString());
-//                    callback.success(uri.toString());
-//
-//                } else {
-//
-//                    callback.error("File uri was null");
-//
-//                }
-//
-//            } else if (resultCode == Activity.RESULT_CANCELED) {
-//
-//                // TODO NO_RESULT or error callback?
-//                PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
-//                callback.sendPluginResult(pluginResult);
-//
-//            } else {
-//
-//                callback.error(resultCode);
-//            }
         }
     }
 }
