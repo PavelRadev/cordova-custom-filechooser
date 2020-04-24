@@ -40,8 +40,8 @@ public class CustomFileChooser extends CordovaPlugin {
 
         if(extraMimeTypes.length > 1)  intent.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
 
-        //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        //intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
 
         Intent chooser = Intent.createChooser(intent, "Select File");
         cordova.startActivityForResult(this, chooser, PICK_FILE_REQUEST);
