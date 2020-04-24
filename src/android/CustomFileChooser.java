@@ -56,31 +56,33 @@ public class CustomFileChooser extends CordovaPlugin {
 
         if (requestCode == PICK_FILE_REQUEST && callback != null) {
 
-            if (resultCode == Activity.RESULT_OK) {
+            callback.success(resultCode.toString());
 
-                Uri uri = data.getData();
-
-                if (uri != null) {
-
-                    Log.w(TAG, uri.toString());
-                    callback.success(uri.toString());
-
-                } else {
-
-                    callback.error("File uri was null");
-
-                }
-
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-
-                // TODO NO_RESULT or error callback?
-                PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
-                callback.sendPluginResult(pluginResult);
-
-            } else {
-
-                callback.error(resultCode);
-            }
+//            if (resultCode == Activity.RESULT_OK) {
+//
+//                Uri uri = data.getData();
+//
+//                if (uri != null) {
+//
+//                    Log.w(TAG, uri.toString());
+//                    callback.success(uri.toString());
+//
+//                } else {
+//
+//                    callback.error("File uri was null");
+//
+//                }
+//
+//            } else if (resultCode == Activity.RESULT_CANCELED) {
+//
+//                // TODO NO_RESULT or error callback?
+//                PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+//                callback.sendPluginResult(pluginResult);
+//
+//            } else {
+//
+//                callback.error(resultCode);
+//            }
         }
     }
 }
