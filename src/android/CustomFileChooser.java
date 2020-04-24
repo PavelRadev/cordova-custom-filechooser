@@ -11,6 +11,10 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class CustomFileChooser extends CordovaPlugin {
 
     private static final String TAG = "CustomFileChooser";
@@ -55,8 +59,18 @@ public class CustomFileChooser extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == PICK_FILE_REQUEST && callback != null) {
+            JSONArray jsonArray = new JSONArray();
 
-            callback.success(data.getData());
+            if(null != data.getClipData()) { // checking multiple selection or not
+                for(int i = 0; i < data.getClipData().getItemCount(); i++) {
+                    Uri uri = data.getClipData().getItemAt(i).getUri();
+                    jsonArray.add(uri.toString());
+                }
+            } else {
+                Uri uri = data.getData();
+                jsonArray.add(uri.toString());
+            }
+            callback.success(jsonArray.toString());
 
 //            if (resultCode == Activity.RESULT_OK) {
 //
