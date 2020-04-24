@@ -34,7 +34,7 @@ public class CustomFileChooser extends CordovaPlugin {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         String[] extraMimeTypes = type.split(",");
 
-        intent.setType(extraMimeTypes[0]);
+        intent.setType("image/*");
         for(int i = 0; i < extraMimeTypes.length; i++) extraMimeTypes[i] = extraMimeTypes[i].trim();
 
         if(extraMimeTypes.length > 1)  intent.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
