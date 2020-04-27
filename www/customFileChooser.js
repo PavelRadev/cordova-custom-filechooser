@@ -1,6 +1,9 @@
 module.exports = {
-    open: function (type, success, failure) {
-        if(type == null || type == '') type = '*/*';
-        cordova.exec(success, failure, "CustomFileChooser", "open", [type]);
+    open: function (type, allowMultiple, success, failure) {
+        if (type == null || type == '') type = '*/*';
+
+        allowMultiple = !!allowMultiple;
+
+        cordova.exec(success, failure, "CustomFileChooser", "open", [type, allowMultiple.toString()]);
     }
 };

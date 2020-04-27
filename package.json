@@ -1,21 +1,18 @@
 {
   "name": "cordova-plugin-custom-filechooser",
-  "version": "1.0.5",
+  "version": "1.0.0",
   "description": "Cordova Custom FileChooser Plugin",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EnriqueGL/cordova-custom-filechooser.git"
+    "url": "git+https://github.com/eugene-kiba/cordova-custom-filechooser.git"
   },
-  "author": "Enrique Garcia",
+  "author": "Eugene Kiba",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/EnriqueGL/cordova-custom-filechooser/issues"
+    "url": "https://github.com/eugene-kiba/cordova-custom-filechooser/issues"
   },
-  "homepage": "https://github.com/EnriqueGL/cordova-custom-filechooser",
+  "homepage": "https://github.com/eugene-kiba/cordova-custom-filechooser",
   "cordova": {
     "id": "cordova-plugin-custom-filechooser",
     "platforms": [
@@ -23,6 +20,6 @@
     ]
   },
   "keywords": [
-    "custom filechooser"
+    "filechooser"
   ]
 }

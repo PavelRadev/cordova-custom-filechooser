@@ -2,21 +2,16 @@ package com.custom.cordova;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 
 import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
-import org.json.JSONException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class CustomFileChooser extends CordovaPlugin {
-
     private static final String TAG = "CustomFileChooser";
     private static final String ACTION_OPEN = "open";
     private static final int PICK_FILE_REQUEST = 1;
@@ -24,26 +19,31 @@ public class CustomFileChooser extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
-
         if (action.equals(ACTION_OPEN)) {
-            chooseFile(callbackContext, args.getString(0));
+            openFileDialog(callbackContext, args.getString(0), args.getString(1));
             return true;
         }
 
         return false;
     }
 
-    public void chooseFile(CallbackContext callbackContext,String type) {
-
+    public void openFileDialog(CallbackContext callbackContext, String type, String allowMultipleString) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        String[] extraMimeTypes = type.split(",");
+        String[] mimeTypes = type.split(",");
+        boolean allowMultiple = Boolean.parseBoolean(allowMultipleString);
 
         intent.setType("file/*");
-        for(int i = 0; i < extraMimeTypes.length; i++) extraMimeTypes[i] = extraMimeTypes[i].trim();
+        for (int i = 0; i < mimeTypes.length; i++) {
+            mimeTypes[i] = mimeTypes[i].trim();
+        }
 
-        if(extraMimeTypes.length > 1)  intent.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
+        if (mimeTypes.length > 1) {
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        }
 
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        if (allowMultiple) {
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        }
 
         Intent chooser = Intent.createChooser(intent, "Select File");
         cordova.startActivityForResult(this, chooser, PICK_FILE_REQUEST);
@@ -56,11 +56,8 @@ public class CustomFileChooser extends CordovaPlugin {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == PICK_FILE_REQUEST && callback != null) {
-
             if (resultCode == Activity.RESULT_OK) {
-
                 JSONArray jsonArray = new JSONArray();
 
                 if (null != data.getClipData()) { // checking multiple selection or not
@@ -73,13 +70,9 @@ public class CustomFileChooser extends CordovaPlugin {
 
                 callback.success(jsonArray.toString());
             } else if (resultCode == Activity.RESULT_CANCELED) {
-
-                // TODO NO_RESULT or error callback?
                 PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
                 callback.sendPluginResult(pluginResult);
-
             } else {
-
                 callback.error(resultCode);
             }
         }
